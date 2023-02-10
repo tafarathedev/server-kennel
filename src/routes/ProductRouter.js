@@ -37,7 +37,7 @@ router.post("/products",adminAuth, async(req,res)=>{
         */
   } catch (error) {
    
-     res.status(400).json({
+     res.status(400).send({
       success:false,
       message:error.message
      })
@@ -49,13 +49,6 @@ router.post("/products",adminAuth, async(req,res)=>{
 //view all products 
  router.get("/products" , async(req,res)=>{
 
-/*   //params query for pagination
-  const query = {} */
-
-
-/* 
-    const skip = parseInt(req.query.skip) || 0
-    const limit = parseInt(req.query.limit) || 10 */
   //products info
     const product =  await Product.find()
      //validate 
@@ -64,7 +57,7 @@ router.post("/products",adminAuth, async(req,res)=>{
          
           
      } catch (error) {
-         return res.json(error.message)
+         return res.send(error.message)
      }
  })
 
@@ -77,11 +70,11 @@ router.post("/products",adminAuth, async(req,res)=>{
 
    try {
          if(!product){
-          return res.json("problem in try state")
+          return res.send("problem in try state")
          }
-         res.status(200).json(product)
+         res.status(200).send(product)
    } catch (error) {
-       return res.json(error.message)
+       return res.send(error.message)
    }
 })
  export default  router

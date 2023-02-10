@@ -19,11 +19,11 @@ router.post("/dogs",adminAuth, async(req,res)=>{
       secure:true,
       httpOnly:true,
       maxAge:1000 * 60 * 60 * 24
-    }).redirect("/site/view_dog")
+    })
        
   } catch (error) {
    
-     res.status(400).json({
+     res.status(400).send({
       success:false,
       message:error.message
      })
@@ -39,13 +39,13 @@ router.post("/dogs",adminAuth, async(req,res)=>{
   //dogs info
     const dog =   await Dog.find({})
   
-   const count =  await Dog.countDocuments()
+
      //validate 
      try {
          
-           res.status(200).json(dog)
+           res.status(200).send(dog)
      } catch (error) {
-         return res.json(error.message)
+         return res.send(error.message)
      }
  })
 
@@ -56,11 +56,11 @@ router.post("/dogs",adminAuth, async(req,res)=>{
    //validate 
    try {
          if(!dog){
-          return res.json("problem in try state")
+          return res.send("problem in try state")
          }
-         res.status(200).json(dog)
+         res.status(200).send(dog)
    } catch (error) {
-       return res.json(error.message)
+       return res.send(error.message)
    }
 })
  export default  router

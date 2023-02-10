@@ -24,9 +24,13 @@ const BlogSchema = new mongoose.Schema({
          ref:"AdminUser"
      }
    ,
-   date:{
+   month:{
       type:Date,
-      default:new Date
+      default:new Date().getMonth()
+   },
+   day:{
+      type:Date,
+      default:new Date().getDay()
    }
   
 })

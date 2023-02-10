@@ -23,7 +23,7 @@ router.post("/blogs",adminAuth, async(req,res)=>{
        
   } catch (error) {
    
-     res.status(400).json({
+     res.status(400).send({
       success:false,
       message:error.message
      })
@@ -34,18 +34,13 @@ router.post("/blogs",adminAuth, async(req,res)=>{
 
 //view all blogs 
  router.get("/blogs" , async(req,res)=>{
-
-  //pagination count 
   //blogs info
     const blog = await Blog.find({})
-  
-   const count = await Blog.countDocuments()
      //validate 
      try {
-         
-           res.status(200).json({message:"fetched!...",blog,count, success:true})
+           res.status(200).send(blog)
      } catch (error) {
-         return res.json(error.message)
+         return res.send(error.message)
      }
  })
 
@@ -56,11 +51,11 @@ router.post("/blogs",adminAuth, async(req,res)=>{
    //validate 
    try {
          if(!blog){
-          return res.json("problem in try state")
+          return res.send("problem in try state")
          }
-         res.status(200).json({message:"fetched!...",blog,success:true})
+         res.status(200).send({message:"fetched!...",blog,success:true})
    } catch (error) {
-       return res.json(error.message)
+       return res.send(error.message)
    }
 })
  export default  router
