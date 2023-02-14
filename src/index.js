@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.json())
 app.use(cors({
-    origin: 'https://legacykennels.org/',
+    origin: '*',
     optionsSuccessStatus: 200,
     credentials:true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
