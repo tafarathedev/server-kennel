@@ -16,7 +16,7 @@ router.post("/products", async(req,res)=>{
       const product = new Product({
         
         id:faker.random.numeric(),
-        title: faker.name.firstName(),
+        name : faker.name.firstName(),
         desc: faker.commerce.productDescription(),
         price: faker.commerce.price(),
         image: faker.image.avatar()
