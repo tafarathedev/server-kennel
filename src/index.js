@@ -29,11 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.json())
-app.use(cors({
-    origin: 'http://localhost:8080',
-    optionsSuccessStatus: 200, // For legacy browser support
-    methods: "GET, PUT"
-}))
+app.use(cors())
 
 app.use(sessions({
     secret: "thisismyseceret",
