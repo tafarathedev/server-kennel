@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     id:{
          type:Number
     },
-     title:{
+     name:{
         type:String ,
         trim:true
      },

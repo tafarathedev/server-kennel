@@ -14,12 +14,7 @@ router.post("/dogs",adminAuth, async(req,res)=>{
     
       await dog.save()
 
-     res
-    .status(200).cookie("dogCookies", req.admin.token ,{
-      secure:true,
-      httpOnly:true,
-      maxAge:1000 * 60 * 60 * 24
-    })
+     res.status(200).send(dog)
        
   } catch (error) {
    
