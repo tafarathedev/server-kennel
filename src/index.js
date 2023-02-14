@@ -29,7 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'https://legacykennels.org/',
+    optionsSuccessStatus: 200
+}))
 
 app.use(sessions({
     secret: "thisismyseceret",
