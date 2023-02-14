@@ -9,12 +9,12 @@ import adminAuth from '../middleware/adminAuth.js'
 
 
 //post router for dog products 
-router.post("/products",adminAuth, async(req,res)=>{
+router.post("/products", async(req,res)=>{
   try {
  let count = 1 
     for (var i = 0; i < 50; i++) {
       const product = new Product({
-        owner:req.admin._id,
+        
         id:faker.random.numeric(),
         title: faker.name.firstName(),
         desc: faker.commerce.productDescription(),
