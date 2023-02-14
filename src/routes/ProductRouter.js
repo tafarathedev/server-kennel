@@ -23,7 +23,7 @@ router.post("/products", async(req,res)=>{
       });
     await product.save();
     }
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://legacykennels.org/");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.status(200).send(product)
    /*  const product = new Product({...req.body , owner:req.admin._id})
