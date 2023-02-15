@@ -9,7 +9,6 @@ import UserRouter from './routes/UserRouter.js'
 import ProductRouter from './routes/ProductRouter.js'
 import DogsRouter from './routes/DogsRouter.js'
 import AdminUser from './routes/Admin/api/AdminRouter.js'
-import pageRouter from './routes/Admin/site/admin.router.js'
 import CartRouter from './routes/CartRouter.js'
 
 dotenv.config()
@@ -21,7 +20,7 @@ const port = process.env.PORT
  //middlewares
 app.use(express.json())
 app.use(cors({
-    origin:"https://legacyKennels.org",
+    origin:"*",
     
 }))
 
