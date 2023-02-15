@@ -40,7 +40,7 @@ router.post("/login", async(req,res)=>{
   try {
     const user = await User.findByCredentials(email,password);
     const token = await user.setAuthToken()
-    await user.save().json({success:true, user , message:"Logged in Successfully", token});
+    await user.save().json({user, token});
 } catch (e) {
     res.status(400).send({
       success:false,
