@@ -2,10 +2,7 @@ import express from 'express'
 import './server/server.js'
 import path from 'path'
 import cors from  'cors'
-import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
-import cookieParser from 'cookie-parser'
-import sessions from 'express-session'
 
 //router pages
 import UserRouter from './routes/UserRouter.js'
@@ -21,24 +18,13 @@ dotenv.config()
 const app = express() 
 //port 
 const port = process.env.PORT 
-//middleware and body parser
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-app.use(bodyParser.json())
-app.use(cookieParser())
+ //middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin:"https://legacyKennels.org",
+    
+}))
 
-app.use(sessions({
-    secret: "thisismyseceret",
-    saveUninitialized:true,
-    cookie: { 
-        maxAge: 1000 * 60 * 60 * 24
-     },
-    resave: false 
-}));
 // router routes
 app.use(UserRouter)
 app.use(ProductRouter)

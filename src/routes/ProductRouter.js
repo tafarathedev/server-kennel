@@ -23,20 +23,10 @@ router.post("/products", async(req,res)=>{
       });
     await product.save();
     }
-    res.header("Access-Control-Allow-Origin", "https://legacykennels.org/");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   /*  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); */
     res.status(200).send(product)
-   /*  const product = new Product({...req.body , owner:req.admin._id})
-    
-     await product.save()
-
-     res
-    .status(200).cookie("postCookies", product ,{
-      secure:true,
-      httpOnly:true,
-      maxAge:1000 * 60 * 60 * 24
-    }).redirect("/site/view_product")
-        */
+  
   } catch (error) {
    
      res.status(400).send({

@@ -13,16 +13,9 @@ router.post("/register", async(req,res)=>{
   try {
     const user = new User({email, password , firstName, lastName , agree})
     const token = await user.setAuthToken()
-    if(!user){
-      res.status(401).redirect('/createUser')
-    }
+     
     sendWelcomeEmail(user.email )
     const saveUser = await user.save()
-    res.cookie("authCookies" , token ,{
-      secure:true,
-      httpOnly:true,
-      maxAge:90000  
-    })
     .status(200)
     .json({
       success:true,
@@ -47,13 +40,7 @@ router.post("/login", async(req,res)=>{
   try {
     const user = await User.findByCredentials(email,password);
     const token = await user.setAuthToken()
-    await user.save()
-    res.cookie("authCookies" , {
-      secure:true,
-      httpOnly:true,
-      maxAge:90000
-      
-    }).json({success:true, user , message:"Logged in Successfully", token});
+    await user.save().json({success:true, user , message:"Logged in Successfully", token});
 } catch (e) {
     res.status(400).send({
       success:false,
@@ -70,13 +57,7 @@ router.post('/logout', auth, async (req, res) => {
       req.user.tokens = req.user.tokens.filter((token) => {
           return token.token !== req.token
       })
-      await req.user.save()
-        console.log(req.user.tokens)
-    res.cookie("authCookies", {
-      httpOnly:true,
-      secure:true,
-      maxAge:90000
-    }).status().json({
+      await req.user.save().status().json({
       success:true,
      message :"Logout Successful"
     })
