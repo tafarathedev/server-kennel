@@ -12,7 +12,7 @@ import adminAuth from '../middleware/adminAuth.js'
 router.post("/products", async(req,res)=>{
   try {
  let count = 1 
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 10; i++) {
       const product = new Product({
         
         id:faker.random.numeric(),
@@ -26,9 +26,7 @@ router.post("/products", async(req,res)=>{
    /*  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); */
     res.status(200).send(product)
-  
   } catch (error) {
-   
      res.status(400).send({
       success:false,
       message:error.message

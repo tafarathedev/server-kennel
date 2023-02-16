@@ -1,9 +1,7 @@
 import express from 'express'
-import './server/server.js'
-import path from 'path'
 import cors from  'cors'
 import dotenv from 'dotenv'
-
+import './server/server.js'
 //router pages
 import UserRouter from './routes/UserRouter.js'
 import ProductRouter from './routes/ProductRouter.js'
@@ -12,6 +10,7 @@ import AdminUser from './routes/Admin/api/AdminRouter.js'
 import CartRouter from './routes/CartRouter.js'
 
 dotenv.config()
+
 
 //express function
 const app = express() 

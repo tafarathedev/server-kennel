@@ -14,21 +14,21 @@ router.post("/register", async(req,res)=>{
     const user = new User({email, password , firstName, lastName , agree})
     const token = await user.setAuthToken()
      
-    sendWelcomeEmail(user.email )
-    const saveUser = await user.save()
-    .status(200)
-    .json({
+    sendWelcomeEmail(user.email)
+     await user.save()
+    res.status(200)
+    .send({
       success:true,
-      user:saveUser,
+      user,
       message:"User Account Created Successfully",
       token
     })
        
   } catch (error) {
    
-     res.status(400).json({
+     res.status(400).send({
       success:false,
-      message:error
+      message:error.message
      })
   }
     
@@ -40,7 +40,8 @@ router.post("/login", async(req,res)=>{
   try {
     const user = await User.findByCredentials(email,password);
     const token = await user.setAuthToken()
-    await user.save().json({user, token});
+    await user.save()
+    res.status(200).send({user , token})
 } catch (e) {
     res.status(400).send({
       success:false,
