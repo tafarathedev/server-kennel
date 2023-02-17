@@ -1,5 +1,6 @@
 import express from 'express'
 import auth from '../middleware/auth.js'
+import cors from 'cors'
 const router = express.Router()
 import User from '../models/UserModel.js'
 import {sendWelcomeEmail} from '../email/account.js'
@@ -35,7 +36,7 @@ router.post("/register", async(req,res)=>{
 })
 
 //login user
-router.post("/login", async(req,res)=>{
+router.post("/login",cors(), async(req,res)=>{
   const {email , password} = req.body
   try {
     const user = await User.findByCredentials(email,password);
