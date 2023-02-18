@@ -26,6 +26,7 @@ router.post("/products", async(req,res)=>{
    /*  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); */
     res.status(200).send(product)
+
   } catch (error) {
      res.status(400).send({
       success:false,
