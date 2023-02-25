@@ -15,11 +15,7 @@ router.post("/blogs",adminAuth, async(req,res)=>{
       await blog.save()
 
      res
-    .status(200).cookie("blogCookies", req.admin.token ,{
-      secure:true,
-      httpOnly:true,
-      maxAge:1000 * 60 * 60 * 24
-    }).redirect("/site/view_blog")
+    .status(200).cookie("blogCookies", req.admin.token)
        
   } catch (error) {
    

@@ -10,6 +10,7 @@ import DogsRouter from './routes/DogsRouter.js'
 import AdminUser from './routes/Admin/api/AdminRouter.js'
 import CartRouter from './routes/CartRouter.js'
 import paymentApi from './routes/StripePayment.js'
+import BlogRouter from './routes/BlogRouter.js'
 
 dotenv.config()
 
@@ -50,6 +51,7 @@ app.use(ProductRouter)
 app.use(CartRouter)
 app.use(DogsRouter)
 app.use(AdminUser)
+app.use(BlogRouter)
 //checkout session
 app.use(paymentApi)
 

@@ -12,7 +12,7 @@ import adminAuth from '../middleware/adminAuth.js'
 router.post("/products", async(req,res)=>{
   try {
  let count = 1 
-    for (var i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       const product = new Product({
         
         id:faker.random.numeric(),

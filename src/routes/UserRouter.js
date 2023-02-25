@@ -51,7 +51,7 @@ router.post("/login", async(req,res)=>{
 }) 
 
 
-//logout from current mobile
+//logout from current mobile~
 router.post('/logout', auth, async (req, res) => {
    
    try {
