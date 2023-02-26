@@ -62,14 +62,14 @@ app.post('/api/checkout', async (req, res) => {
 
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["alipay" , "card" , "wechat"],
+      payment_method_types:paymentMethodTypes,
       line_items: [
         {
           name: 'Example Product',
           description: 'Example description',
           amount,
           currency,
-          quantity: 1
+          quantity:1
         }
       ],
       success_url: successUrl,
