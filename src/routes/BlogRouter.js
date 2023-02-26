@@ -3,19 +3,25 @@ import express from  'express'
 const router = express.Router()
 // import user model 
  import Blog from '../models/BlogModel.js'
-import adminAuth from '../middleware/adminAuth.js'
+//import adminAuth from '../middleware/adminAuth.js'
 
 
 
 //post router for blog blogs 
-router.post("/blogs",adminAuth, async(req,res)=>{
+router.post("/blogs" , async(req,res)=>{
   try {
-    const blog = new Blog({...req.body , owner:req.admin._id})
-    
-      await blog.save()
-
-     res
-    .status(200).cookie("blogCookies", req.admin.token)
+   
+    for(let i = 0; i < 10; i++){
+      const blogs = new Blog({
+        title : faker.name.firstName(),
+        image: faker.image.abstract(),
+        article: faker.commerce.productDescription(),
+        month: 5,
+        day:12
+      });
+    await blogs.save();
+    }
+    res.status(200).send(blogs)
        
   } catch (error) {
    

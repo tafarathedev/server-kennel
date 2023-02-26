@@ -11,10 +11,9 @@ import adminAuth from '../middleware/adminAuth.js'
 //post router for dog products 
 router.post("/products", async(req,res)=>{
   try {
- let count = 1 
+ 
     for (let i = 0; i < 10; i++) {
       const product = new Product({
-        
         id:faker.random.numeric(),
         name : faker.name.firstName(),
         desc: faker.commerce.productDescription(),
@@ -23,8 +22,7 @@ router.post("/products", async(req,res)=>{
       });
     await product.save();
     }
-   /*  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); */
+   
     res.status(200).send(product)
 
   } catch (error) {
