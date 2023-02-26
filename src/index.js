@@ -56,32 +56,32 @@ app.use(AdminUser)
 app.use(BlogRouter)
 //checkout session
 //stripe here \
-app.post('/create-payment-intent', async (req, res) => {
-  const { amount, name, email, address1, address2, city, state, postalCode, country } = req.body;
 
+app.post('/api/checkout', async (req, res) => {
+  const { amount, currency, paymentMethodTypes, successUrl, cancelUrl } = req.body;
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
-    currency: 'zmw',
-    billing_details: {
-      name: name,
-      email: email,
-      address: {
-        line1: address1,
-        line2: address2,
-        city: city,
-        state: state,
-        postal_code: postalCode,
-        country: country,
-      },
-    },
-  });
- await paymentIntent.save()
-      res.status(200).send({
-        clientSecret: paymentIntent.client_secret,
-      });
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["alipay" , "card" , "wechat"],
+      line_items: [
+        {
+          name: 'Example Product',
+          description: 'Example description',
+          amount,
+          currency,
+          quantity: 1
+        }
+      ],
+      success_url: successUrl,
+      cancel_url: cancelUrl
+    });
+
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unable to create checkout session' });
+  }
 });
-
 
 
 
