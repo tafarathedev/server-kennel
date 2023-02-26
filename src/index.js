@@ -76,10 +76,10 @@ app.post('/create-payment-intent', async (req, res) => {
       },
     },
   });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+ await paymentIntent.save()
+      res.status(200).send({
+        clientSecret: paymentIntent.client_secret,
+      });
 });
 
 
