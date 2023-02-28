@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import bodyParser from 'body-parser'
 import stripe from 'stripe'
-stripe(process.env.STRIPE_SECRET_KEY); 
+
 import './server/server.js'
 //router pages
 import UserRouter from './routes/UserRouter.js'
@@ -56,6 +56,7 @@ app.use(AdminUser)
 app.use(BlogRouter)
 //checkout session
 //stripe here \
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY); 
 
 app.post('/api/checkout', async (req, res) => {
   const { name ,amount, currency, paymentMethodTypes, quantity,description, successUrl, cancelUrl } = req.body;
@@ -77,6 +78,7 @@ app.post('/api/checkout', async (req, res) => {
     });
 
     res.json({ sessionId: session.id });
+      
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Unable to create checkout session' });
