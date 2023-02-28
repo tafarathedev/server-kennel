@@ -58,18 +58,18 @@ app.use(BlogRouter)
 //stripe here \
 
 app.post('/api/checkout', async (req, res) => {
-  const { amount, currency, paymentMethodTypes, successUrl, cancelUrl } = req.body;
+  const { name ,amount, currency, paymentMethodTypes, quantity,description, successUrl, cancelUrl } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types:paymentMethodTypes,
       line_items: [
         {
-          name: 'Example Product',
-          description: 'Example description',
+          name,
+          description,
           amount,
           currency,
-          quantity:1
+          quantity
         }
       ],
       success_url: successUrl,
