@@ -1,6 +1,7 @@
-import express from 'express'
+import express from  'express'
+//use express router  
+const router = express.Router()
 import Stripe from 'stripe'
-const  router = express.Router()
 
 
 //stripe here \
