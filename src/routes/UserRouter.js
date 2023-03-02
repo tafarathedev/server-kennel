@@ -3,6 +3,7 @@ import auth from '../middleware/auth.js'
 const router = express.Router()
 import User from '../models/UserModel.js'
 import {sendWelcomeEmail} from '../email/account.js'
+import fs from 'fs';
 import sharp from 'sharp' 
 import multer from 'multer'
 
@@ -121,54 +122,59 @@ router.patch('/me/upload', auth, async (req, res) => {
       res.status(400).send(e)
   }
 
-   //uplaod profile picture here
-   /* profile pic storage  */
-const upload = multer({
-  limits: {
-      fileSize: 1000000
+// Create a Multer instance with the desired configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/images'); // Set the upload directory
   },
-  fileFilter(req, file, cb) {
-      if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-          return cb(new Error('Please upload an image'))
-      }
-
-      cb(undefined, true)
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg'); // Set the file name
   }
 })
- 
-//post picture
-router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-  const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-  req.user.avatar = buffer
-  await req.user.save()
-  res.send()
-}, (error, req, res, next) => {
-  res.status(400).send({ error: error.message })
-})
 
- //delete profile picture
-router.delete('/users/me/avatar', auth, async (req, res) => {
-  req.user.avatar = undefined
-  await req.user.save()
-  res.send()
-})
+const upload = multer({ storage: storage });
 
-//view profile picture
-router.get('/users/:id/avatar', async (req, res) => {
+// Define a route to handle image uploads
+router.post('/image-upload', upload.single('image'), (req, res) => {
+  // The uploaded image can be accessed through req.file
+  res.send('Image uploaded successfully!');
+});
+
+
+// Define a route to delete an image
+router.delete('/delete-image/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const path = `uploads/images/${filename}`; // Set the path to the image file
+
+  // Check if the file exists
+  if (fs.existsSync(path)) {
+    // Delete the file
+    fs.unlinkSync(path);
+    res.send('Image deleted successfully!');
+  } else {
+    res.status(404).send('Image not found!');
+  }
+});
+
+
+/* // Define a route to get a user's profile
+router.get('/users/:userId/profile', async (req, res) => {
   try {
-      const user = await User.findById(req.params.id)
-
-      if (!user || !user.avatar) {
-          throw new Error()
-      }
-
-      res.set('Content-Type', 'image/png')
-      res.send(user.avatar)
-  } catch (e) {
-      res.status(404).send()
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    
+    res.render('profile', { user }); // Render the profile view with the user object
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching the user profile');
   }
-})
-
+});
+ */
 
 })
 
