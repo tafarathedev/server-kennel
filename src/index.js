@@ -28,10 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: '*', // Allow requests from any origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow the specified HTTP methods
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true // Allow credentials (e.g. cookies, authorization headers) to be included in requests
+  
   })
 );
 
