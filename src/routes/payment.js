@@ -8,6 +8,7 @@ import Stripe from 'stripe'
 const stripePromise  = new Stripe("sk_test_51JRZ0KH8R1pU2TcbKCj97mQuZ8tZcAoerac8RMAg37KSJDx7EDeAq91O76WBDd5qwLqoEziOa2V6bzMTUdJy90cp00mSWQsN3C"); 
 const stripe = await stripePromise;
 router.post('/api/checkout', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { name ,amount, currency, paymentMethodTypes, quantity,description, successUrl, cancelUrl } = req.body;
 
   try {
