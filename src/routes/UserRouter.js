@@ -158,23 +158,23 @@ router.delete('/delete-image/:filename', (req, res) => {
 });
 
 
-/* // Define a route to get a user's profile
-router.get('/users/:userId/profile', async (req, res) => {
+ // Define a route to get a user's profile
+router.get('/users',admin, async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const user = await User.findById(userId);
+  
+    const users = await User.find({});
     
-    if (!user) {
+    if (!users) {
       return res.status(404).send('User not found');
     }
     
-    res.render('profile', { user }); // Render the profile view with the user object
+    res.status(200).json(users) // Render the profile view with the user object
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while fetching the user profile');
   }
 });
- */
+ 
 
 })
 
