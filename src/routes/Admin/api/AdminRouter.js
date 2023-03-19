@@ -41,7 +41,7 @@ router.post("/admin/login", async(req,res)=>{
 }) 
 
  // Define a route to get a user's profile
- router.get('/admin/users',admin, async (req, res) => {
+ router.get('/admin/users', async (req, res) => {
   try {
   
     const users = await User.find({});
