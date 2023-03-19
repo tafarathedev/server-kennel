@@ -5,7 +5,7 @@ import {sendWelcomeEmail} from '../../../email/account.js'
 import sharp from 'sharp' 
 import multer from 'multer'
 import AdminUser from '../../../models/Admin/api/AdminModel.js'
-
+import User from '../../../models/UserModel.js'
 
 
 //create user account
@@ -34,14 +34,28 @@ router.post("/admin/login", async(req,res)=>{
    
   try {
      await admin.save()
-    
    return res.status(200).json({admin,token})
 } catch (e) {
     return res.json(e.message);
 }
 }) 
 
-
+ // Define a route to get a user's profile
+ router.get('/admin/users',admin, async (req, res) => {
+  try {
+  
+    const users = await User.find({});
+    
+    if (!users) {
+      return res.status(404).send('User not found');
+    }
+    
+    res.status(200).json(users) // Render the profile view with the user object
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching the user profile');
+  }
+});
 
 // more user controls here
 
