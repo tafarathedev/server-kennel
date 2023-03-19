@@ -16,13 +16,8 @@ router.post("/admin/create", async(req,res)=>{
     const token =  await admin.setAdminAuthToken()
     sendWelcomeEmail(admin.email )
      await admin.save()
-    res.cookie("adminAuthCookies" , token,{
-      secure:true,
-      httpOnly:true,
-      maxAge:90000  
-    })
-    .status(200)
-    .redirect('/site/dashboard')
+    res.status(200)
+  .json({admin , token})
        
   } catch (error) {
    
@@ -40,11 +35,7 @@ router.post("/admin/login", async(req,res)=>{
   try {
      await admin.save()
     
-   return res.status(200).cookie("adminAuthCookies" , token, {
-      secure:true,
-      httpOnly:true,
-      maxAge:1000 * 60 * 60 * 24
-    }).redirect("/site/dashboard")  
+   return res.status(200).json({admin,token})
 } catch (e) {
     return res.json(e.message);
 }
