@@ -6,7 +6,7 @@ import sharp from 'sharp'
 import multer from 'multer'
 import AdminUser from '../../../models/Admin/api/AdminModel.js'
 import User from '../../../models/UserModel.js'
-
+import admin from '../../../middleware/adminAuth.js'
 
 //create user account
 router.post("/admin/create", async(req,res)=>{
