@@ -1,12 +1,12 @@
-import express from 'express'
-//import adminAuth from '../../../middleware/adminAuth.js'
-const router = express.Router()
-import {sendWelcomeEmail} from '../../../email/account.js'
-import sharp from 'sharp' 
-import multer from 'multer'
-import AdminUser from '../../../models/Admin/api/AdminModel.js'
-import User from '../../../models/UserModel.js'
-import admin from '../../../middleware/adminAuth.js'
+const express = require('express');
+const router = express.Router();
+const sharp = require('sharp');
+const multer = require('multer');
+const AdminUser = require('../../../models/Admin/api/AdminModel.js');
+const User = require('../../../models/UserModel.js');
+const adminAuth = require('../../../middleware/adminAuth.js');
+const { sendWelcomeEmail } = require('../../../email/account.js');
+
 
 //create user account
 router.post("/admin/create", async(req,res)=>{
@@ -42,21 +42,23 @@ router.post("/admin/login", async(req,res)=>{
 
  // Define a route to get a user's profile
  router.get('/admin/users', async (req, res) => {
+
+  
   try {
   
-    const users = await User.find({});
+     const users = await User.find({});
     
     if (!users) {
       return res.status(404).send('User not found');
-    }
+    } 
     
-    res.status(200).json(users) // Render the profile view with the user object
+      res.status(200).json(users)  // Render the profile view with the user object
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while fetching the user profile');
-  }
+  } 
 });
 
 // more user controls here
 
-export default router
+module.exports = router

@@ -1,6 +1,6 @@
-import nodemailer from 'nodemailer'
-import dotenv from 'dotenv'
-dotenv.config()
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 const sendWelcomeEmail = async(email) => {
@@ -67,7 +67,7 @@ const sendCancellationEmail = async(email) => {
 }
 
 
-export {
+module.exports = {
     sendWelcomeEmail,
     sendCancellationEmail
 }

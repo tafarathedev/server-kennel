@@ -1,10 +1,7 @@
-//how to implement jwt.verify method?
-import jwt from 'jsonwebtoken'
-import dotenv from  'dotenv'
-import AdminUser from '../models/Admin/api/AdminModel.js'
-dotenv.config()
-
-    
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const AdminUser = require('../models/Admin/api/AdminModel.js');
+dotenv.config();
   
 
 const adminAuth = async (req, res, next) => {
@@ -27,7 +24,7 @@ const adminAuth = async (req, res, next) => {
 }    
 
 
-export default adminAuth
+module.exports = adminAuth
 
 
 

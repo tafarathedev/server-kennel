@@ -1,8 +1,6 @@
-import mongoose from 'mongoose'
-//import validator from 'validator';
-import dotenv from  'dotenv'
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config()
-
 
 //schema here 
 const BlogSchema = new mongoose.Schema({
@@ -45,4 +43,4 @@ BlogSchema.virtual('blogs', {
 
 const Blog = mongoose.model("Blog" , BlogSchema)
 
-export default Blog
+module.exports = Blog

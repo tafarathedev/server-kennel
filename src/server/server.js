@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import rateLimit from 'express-rate-limit';
-import express from 'express'
-import helmet from 'helmet';
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 dotenv.config();
 
-const app = express()
+const app = express(0)
 // Validate MongoDB connection string
 if (!process.env.MONGODB_URI || !process.env.MONGODB_URI.startsWith('mongodb+srv://')) {
   console.error('Invalid MongoDB connection string.');
@@ -38,4 +38,4 @@ app.use(limiter);
 // Validate input data
 app.use(helmet());
 
-export default mongoose;
+module.exports = mongoose

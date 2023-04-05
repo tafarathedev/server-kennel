@@ -1,33 +1,38 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
-import './server/server.js';
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+
+require('./server/server.js');
 
 //router pages
-import BlogRouter from './routes/BlogRouter.js';
-import UserRouter from './routes/UserRouter.js';
-import ProductRouter from './routes/ProductRouter.js';
-import DogsRouter from './routes/DogsRouter.js';
-import AdminUser from './routes/Admin/api/AdminRouter.js';
-import CartRouter from './routes/CartRouter.js';
-import Payment from './routes/payment.js';
+const BlogRouter = require('./routes/BlogRouter.js');
+const UserRouter = require('./routes/UserRouter.js');
+const ProductRouter = require('./routes/ProductRouter.js');
+const DogsRouter = require('./routes/DogsRouter.js');
+const AdminUser = require('./routes/Admin/api/AdminRouter.js');
+const CartRouter = require('./routes/CartRouter.js');
+const Page = require('./routes/Admin/Pages.js')
+
 
 dotenv.config();
-
 //express function
 const app = express();
 
 //port
 const port = process.env.PORT;
+const viewsDirectory = path.join(__dirname, '../templates/views');
 
 //middlewares
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors()
-);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(cors());
+app.use(express.static('static'));
+app.set('views', viewsDirectory);
+// Set the partials directory
+app.set('partials', __dirname + '../templates/partials');
+app.set('view engine', 'ejs');
 
 // router routes
 app.use(UserRouter);
@@ -36,9 +41,11 @@ app.use(CartRouter);
 app.use(DogsRouter);
 app.use(AdminUser);
 app.use(BlogRouter);
-app.use(Payment);
+app.use(Page)
+
 
 //checkout session
+
 // error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

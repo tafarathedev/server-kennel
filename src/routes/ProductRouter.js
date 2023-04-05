@@ -1,10 +1,13 @@
-import express from  'express'
-import { faker } from '@faker-js/faker';
+const express = require('express');
+const { faker } = require('@faker-js/faker');
+
 //use express router  
-const router = express.Router()
+const router = express.Router();
+
 // import user model 
-import Product from '../models/ProductModel.js'
-import adminAuth from '../middleware/adminAuth.js'
+const Product = require('../models/ProductModel.js');
+const adminAuth = require('../middleware/adminAuth.js');
+
 
 
 
@@ -66,4 +69,4 @@ router.post("/products", async(req,res)=>{
        return res.send(error.message)
    }
 })
- export default  router
+module.exports = router

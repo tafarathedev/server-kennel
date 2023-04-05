@@ -1,9 +1,10 @@
-import mongoose from 'mongoose'
-import validator from 'validator';
-import bcrypt from 'bcryptjs'
-import jwt from  'jsonwebtoken'
-import dotenv from  'dotenv'
-dotenv.config()
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const userSchema = new mongoose.Schema({
     firstName:{
        type:String,
@@ -116,4 +117,4 @@ userSchema.pre('remove', async function (next) {
 
 const User = mongoose.model("User" , userSchema)
 
-export default User
+module.exports = User

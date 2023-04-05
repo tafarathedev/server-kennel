@@ -1,9 +1,10 @@
-import express from  'express'
 //use express router  
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+
 // import user model 
- import Dog from '../models/DogsModels.js'
-import adminAuth from '../middleware/adminAuth.js'
+const Dog = require('../models/DogsModels.js');
+const adminAuth = require('../middleware/adminAuth.js');
 
 
 
@@ -58,4 +59,4 @@ router.post("/dogs",adminAuth, async(req,res)=>{
        return res.send(error.message)
    }
 })
- export default  router
+module.exports = router

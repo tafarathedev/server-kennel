@@ -1,9 +1,6 @@
-import express from  'express'
-//use express router  
-const router = express.Router()
-// import user model 
- import Blog from '../models/BlogModel.js'
-//import adminAuth from '../middleware/adminAuth.js'
+const express = require('express');
+const router = express.Router();
+const Blog = require('../models/BlogModel.js');
 
 
 
@@ -60,4 +57,4 @@ router.post("/blogs" , async(req,res)=>{
        return res.send(error.message)
    }
 })
- export default  router
+module.exports = router

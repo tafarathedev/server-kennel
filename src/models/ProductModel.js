@@ -1,7 +1,7 @@
-import mongoose from 'mongoose'
-//import validator from 'validator';
-import dotenv from 'dotenv'
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config()
+
 const productSchema = new mongoose.Schema({
     id:{
          type:Number
@@ -36,4 +36,4 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product" , productSchema)
 
-export default Product
+module.exports =  Product

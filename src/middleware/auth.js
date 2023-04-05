@@ -1,11 +1,9 @@
 //how to implement jwt.verify method?
-import jwt from 'jsonwebtoken'
-import dotenv from  'dotenv'
-import User from '../models/UserModel.js'
-dotenv.config()
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const User = require('../models/UserModel.js');
+dotenv.config();
 
-    
-  
 
 const auth = async (req, res, next) => {
     try {
@@ -13,10 +11,8 @@ const auth = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET,{expiresIn:"24h"})
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
 
-        if (!user) {
-            throw new Error()
-        }
-
+        if (!user) throw new Error()
+        
         req.token = token
         req.user = user
         next()
@@ -27,7 +23,7 @@ const auth = async (req, res, next) => {
 }    
 
 
-export default auth
+module.exports = auth
 
 
 

@@ -1,6 +1,7 @@
-import express from  'express'
-import auth from '../middleware/auth.js'
-import Cart from '../models/CartModel.js'
+const express = require('express');
+const auth = require('../middleware/auth.js');
+const Cart = require('../models/CartModel.js');
+
 const router = express.Router()  
 
 
@@ -23,4 +24,4 @@ router.post("/cart",auth , async (req, res) => {
  
 
   
-  export default router
+module.exports = router

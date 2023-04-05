@@ -1,5 +1,6 @@
- import mongoose  from 'mongoose'
-
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config()
 
  const CartSchema = new mongoose.Schema(
     {
@@ -25,5 +26,5 @@
   
   const Cart = mongoose.model("Cart", CartSchema);
   
-  export default Cart 
+module.exports= Cart 
 

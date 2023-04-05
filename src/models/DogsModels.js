@@ -1,6 +1,5 @@
-import mongoose from 'mongoose'
-//import validator from 'validator';
-import dotenv from  'dotenv'
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config()
 
 //mongoose schema type here
@@ -45,4 +44,4 @@ const dogSchema = new mongoose.Schema({
 
 const Dog = mongoose.model("Dog" , dogSchema)
 
-export default Dog
+module.exports = Dog
