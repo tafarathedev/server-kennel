@@ -10,9 +10,9 @@ import multer from 'multer'
 
 //create user account
 router.post("/register", async(req,res)=>{
-    const { email , password , firstName , lastName , agree} = req.body
+    const { email , password , firstName , lastName ,avatar, agree} = req.body
   try {
-    const user = new User({email, password , firstName, lastName , agree})
+    const user = new User({email, password ,avatar, firstName, lastName , agree})
     const token = await user.setAuthToken()
      
     sendWelcomeEmail(user.email)
@@ -88,6 +88,9 @@ router.get("/me/profile",auth, async(req, res) => {
       res.status(402).json(e.message)
   }
 })
+
+
+
 //delete your personal account
 router.delete("delete/me",auth ,async(req,res)=>{
    const user = req.user.remove()
