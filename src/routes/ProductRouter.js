@@ -38,20 +38,19 @@ router.post("/products", async(req,res)=>{
 })
 
 
-//view all products 
- router.get("/products" , async(req,res)=>{
+// view all products 
+router.get("/products", async (req, res) => {
+  try {
+    // get all products
+    const products = await Product.find();
+    // send response with products
+    res.send(products);
+  } catch (error) {
+    // send error message if any error occurs
+    res.send(error.message);
+  }
+});
 
-  //products info
-    const product =  await Product.find()
-     //validate 
-     res.send(product)
-     try {
-         
-          
-     } catch (error) {
-         return res.send(error.message)
-     }
- })
 
 
  router.get("/product/:id" , async(req,res)=>{
