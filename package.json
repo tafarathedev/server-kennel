@@ -29,6 +29,7 @@
     "sharp": "^0.31.3",
     "strapi-provider-email-nodemailer": "^3.6.11",
     "stripe": "^11.11.0",
+    "uuid": "^9.0.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
