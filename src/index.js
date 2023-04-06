@@ -14,7 +14,6 @@ const AdminUser = require('./routes/Admin/api/AdminRouter.js');
 const CartRouter = require('./routes/CartRouter.js');
 const Page = require('./routes/Admin/Pages.js')
 
-
 dotenv.config();
 //express function
 const app = express();

@@ -12,30 +12,26 @@ const adminAuth = require('../middleware/adminAuth.js');
 
 
 //post router for dog products 
-router.post("/products", async(req,res)=>{
-  try {
- 
-    for (let i = 0; i < 10; i++) {
-      const product = new Product({
-        id:faker.random.numeric(),
-        name : faker.name.firstName(),
-        desc: faker.commerce.productDescription(),
-        price: faker.commerce.price(),
-        image: faker.image.avatar()
-      });
-    await product.save();
-    }
-   
-    res.status(200).send(product)
+router.post('/products', async (req, res) => {
+  const { id, name, desc, price, image } = req.body;
 
+  try {
+    const product = new Product({
+      id,
+      name,
+      desc,
+      price,
+      image
+    });
+    await product.save();
+    res.redirect('/all_products')
+    //res.status(201).send(product);
   } catch (error) {
-     res.status(400).send({
-      success:false,
-      message:error.message
-     })
+    console.error(error);
+    res.status(500).send('Server error');
   }
-    
-})
+});
+
 
 
 // view all products 
