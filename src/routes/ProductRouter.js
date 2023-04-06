@@ -7,7 +7,7 @@ const router = express.Router();
 // import user model 
 const Product = require('../models/ProductModel.js');
 const adminAuth = require('../middleware/adminAuth.js');
-const uuid = require('uuid');
+
 
 
 
@@ -18,7 +18,7 @@ router.post('/products', async (req, res) => {
 
   try {
     const product = new Product({
-      id: uuid.v4(),
+      
       name,
       desc,
       price,
