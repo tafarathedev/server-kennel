@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const cloudinary = require('cloudinary').v2;
 const auth = require('../middleware/auth.js');
 const User = require('../models/UserModel.js');
 const { sendWelcomeEmail } = require('../email/account.js');
-const fs = require('fs');
-const sharp = require('sharp');
-const multer = require('multer');
-
+const app = express()
 //create user account
 router.post("/register", async(req,res)=>{
     const { email , password , firstName , lastName ,avatar, agree} = req.body
@@ -53,7 +51,7 @@ router.post("/login", async(req,res)=>{
 
 //logout from current mobile~
 router.post('/logout', auth, async (req, res) => {
-   
+    
    try {
       req.user.tokens = req.user.tokens.filter((token) => {
           return token.token !== req.token
@@ -89,6 +87,18 @@ router.get("/me/profile",auth, async(req, res) => {
 })
 
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+
+
 
 //delete your personal account
 router.delete("delete/me",auth ,async(req,res)=>{
@@ -105,79 +115,45 @@ router.delete("delete/me",auth ,async(req,res)=>{
    }
 })
 
- //uqpdate personal account information
- 
-router.patch('/me/upload', auth, async (req, res) => {
-  const updates = Object.keys(req.body)
-  const allowedUpdates = ['first_name','last_name', 'email', 'password' , 'age' ]
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
-  if (!isValidOperation) {
-      return res.status(400).send({ error: 'Invalid updates!' })
-  }
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+
+
+cloudinary.config({
+  cloud_name: "dno5yxgti",
+  api_key: "777595589566972",
+  api_secret: "GuVeqR7wVAh0Gp8pmqGx8FngT7g",
+  secure: true
+});
+
+router.post('/upload', async (req, res) => {
+  // allow overwriting the asset with new versions
+  const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+  };
 
   try {
-      updates.forEach((update) => req.user[update] = req.body[update])
-      await req.user.save()
-      res.send(req.user)
-  } catch (e) {
-      res.status(400).send(e)
-  }
-
-// Create a Multer instance with the desired configuration
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/images'); // Set the upload directory
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg'); // Set the file name
-  }
-})
-
-const upload = multer({ storage: storage });
-
-// Define a route to handle image uploads
-router.post('/image-upload', upload.single('image'), (req, res) => {
-  // The uploaded image can be accessed through req.file
-  res.send('Image uploaded successfully!');
-});
-
-
-// Define a route to delete an image
-router.delete('/delete-image/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const path = `uploads/images/${filename}`; // Set the path to the image file
-
-  // Check if the file exists
-  if (fs.existsSync(path)) {
-    // Delete the file
-    fs.unlinkSync(path);
-    res.send('Image deleted successfully!');
-  } else {
-    res.status(404).send('Image not found!');
-  }
-});
-
-
- // Define a route to get a user's profile
-router.get('/users',admin, async (req, res) => {
-  try {
-  
-    const users = await User.find({});
     
-    if (!users) {
-      return res.status(404).send('User not found');
-    }
-    
-    res.status(200).json(users) // Render the profile view with the user object
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching the user profile');
+      const fileStr = req.body.data;
+      const uploadResponse = await cloudinary.uploader.upload(fileStr,options);
+      console.log(uploadResponse);
+      res.json({ msg: 'yaya' });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ err: 'Something went wrong' });
   }
 });
- 
 
-})
+
+
+
+
+
+
+
 
 module.exports = router
