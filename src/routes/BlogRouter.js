@@ -6,18 +6,29 @@ const Blog = require('../models/BlogModel.js');
 
 //post router for blog blogs 
 router.post("/blogs" , async(req,res)=>{
+  const {
+    title ,
+    image,
+    article,
+    date
+  } = req.body
+  const today = new Date();
+  const day = today.getDate();
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthIndex = Math.round(today.getMonth());
+  const month = monthNames[monthIndex];
+  const year = today.getFullYear();
   try {
    
-    for(let i = 0; i < 10; i++){
+   
       const blogs = new Blog({
-        title : faker.name.firstName(),
-        image: faker.image.abstract(),
-        article: faker.commerce.productDescription(),
-        month: 5,
-        day:12
+        title ,
+        image,
+        article,
+       date:` ${month} ${day} , ${year}`
       });
     await blogs.save();
-    }
+    
     res.status(200).send(blogs)
        
   } catch (error) {

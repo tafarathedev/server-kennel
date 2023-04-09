@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/UserModel')
 const Product = require('../../models/ProductModel')
+const Dog = require('../../models/DogsModels')
 
 router.get('/', async (req, res) => {
     const users = await User.find({})
@@ -19,4 +20,17 @@ router.get('/', async (req, res) => {
             
       
    })
+
+
+//view all dogs 
+ router.get("/dogs" , async(req,res)=>{
+ 
+  
+  //dogs info
+    const dogs =   await Dog.find({})
+         res.render('dogs')
+           //res.status(200).send(dog)
+    
+ })
+
   module.exports = router;

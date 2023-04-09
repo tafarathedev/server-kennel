@@ -4,6 +4,11 @@ dotenv.config()
 
 //schema here 
 const BlogSchema = new mongoose.Schema({
+   author:{
+      type:String ,
+      trim:true,
+      default:"Admin"
+   },
      title:{
         type:String ,
         trim:true
@@ -22,13 +27,9 @@ const BlogSchema = new mongoose.Schema({
          ref:"AdminUser"
      }
    ,
-   month:{
-      type:Date,
-      default:new Date().getMonth()
-   },
-   day:{
-      type:Date,
-      default:new Date().getDay()
+   date:{
+      type:String,
+
    }
   
 })

@@ -11,24 +11,18 @@ const dogSchema = new mongoose.Schema({
       type:String,
       trim:true
      },
+   color:{
+      type:String,
+      trim:true
+     },
      image:{
      type:String,
      trim:true
      },color:{
 
      },
-     desc:{
-        type:String,
-        trim:true,
-        
-     },
-     price:{
-        type:Number,
-        trim:true
-     },
      owner:{
         type:mongoose.Schema.Types.ObjectId,
-        required:true,
          ref:"AdminUser"
      }
    ,
