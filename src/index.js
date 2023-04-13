@@ -26,13 +26,20 @@ const viewsDirectory = path.join(__dirname, '../templates/views');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(cors({
-  origin:"*"
+// allow all domains
+app.use(cors());
+
+app.options('*', cors({
+  allowedHeaders: ['Authorization', 'Content-Type']
 }));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization');
   next();
 });
+
+
+
 app.use(express.static('static'));
 app.set('views', viewsDirectory);
 // Set the partials directory

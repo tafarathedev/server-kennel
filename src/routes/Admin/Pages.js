@@ -27,8 +27,10 @@ router.get('/', async (req, res) => {
  
   
   //dogs info
-    const dogs =   await Dog.find({})
-         res.render('dogs')
+  const dogs =  await Dogs.find({})
+         res.render('dogs', {
+          dogs
+         })
            //res.status(200).send(dog)
     
  })

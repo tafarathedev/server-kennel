@@ -49,7 +49,8 @@ const userSchema = new mongoose.Schema({
         trim:true
     },
     avatar:{
-     type:'String'
+     type:'String',
+     default:""
       
     },
     tokens: [{

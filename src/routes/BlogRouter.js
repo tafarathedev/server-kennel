@@ -25,7 +25,7 @@ router.post("/blogs" , async(req,res)=>{
         title ,
         image,
         article,
-       date:` ${month} ${day} , ${year}`
+        date:` ${month} ${day} , ${year}`
       });
     await blogs.save();
     

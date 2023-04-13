@@ -38,8 +38,8 @@ router.post("/dogs",adminAuth, async(req,res)=>{
 
      //validate 
      try {
-         res.render("dogs")
-           //res.status(200).send(dog)
+         if(!dog)return Error
+           res.status(200).send(dog)
      } catch (error) {
          return res.send(error.message)
      }

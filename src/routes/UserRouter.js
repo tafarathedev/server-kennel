@@ -7,7 +7,7 @@ const { sendWelcomeEmail } = require('../email/account.js');
 const app = express()
 //create user account
 router.post("/register", async(req,res)=>{
-    const { email , password , firstName , lastName ,avatar, agree} = req.body
+    const { email , password , firstName ,avatar, lastName, agree} = req.body
   try {
     const user = new User({email, password ,avatar, firstName, lastName , agree})
     const token = await user.setAuthToken()
@@ -121,36 +121,88 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 
 
-cloudinary.config({
-  cloud_name: "dno5yxgti",
-  api_key: "777595589566972",
-  api_secret: "GuVeqR7wVAh0Gp8pmqGx8FngT7g",
-  secure: true
-});
 
-router.post('/upload', async (req, res) => {
+
+/* router.post('/upload',auth, async (req, res) => {
   // allow overwriting the asset with new versions
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  };
-
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  })
   try {
-    
-      const fileStr = req.body.data;
-      const uploadResponse = await cloudinary.uploader.upload(fileStr,options);
-      console.log(uploadResponse);
-      res.json({ msg: 'yaya' });
+       // Get the user ID from the authenticated user object
+       const id = req.user._id;
+       // Update the user's avatar field with the new URL
+       const user = await User.findOne(id)
+       user.avatar = req.body.avatar
+       await user.save()
+      
+      
+      res.status(200).send(user.avatar)
   } catch (err) {
-      console.error(err);
+      console.error(err.message);
       res.status(500).json({ err: 'Something went wrong' });
   }
 });
+ */
+
+//imag eupload route 
+ router.patch('/upload/avatar', auth, async (req, res) => {
+  // allow overwriting the asset with new versions
+  const updates = Object.keys(req.body)
+  const allowUpdates = ['avatar']
+  const IsValidOperation = updates.every((update) => allowUpdates.includes(update))
 
 
+  if (!IsValidOperation) return res.send({ error: 'invalid updates ' })
+  try {
+    const user = await User.findByIdAndUpdate(req.user._id)
+        updates.forEach((update) => user[update] = req.body[update])
+        await user.save()
+
+    // Set headers to allow CORS
+    res.set({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    })
+
+    res.status(200).send(user.avatar)
+
+  } catch (err) {
+    console.error(err.message);
+    // res.status(500).json({ err: 'Something went wrong' });
+  }
+});
+ 
+router.delete('/delete/avatar', auth, async(req, res) => {
+  try {
+      const user = await User.findOne({ _id: req.user._id })
+      user.avatar = "https://i0.wp.com/vssmn.org/wp-content/uploads/2018/12/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png?fit=860%2C681&ssl=1"
+      await user.save()
 
 
+      res.status(200).send(user)
+  } catch (e) {
+      res.status(400).send(e)
+  }
+})
+
+//image viewing route
+router.get('/user/:id/avatar', async(req, res) => {
+  try {
+      const user = await User.findById(req.params.id)
+      if (!user || !user.avatar) {
+          throw new Error()
+      }
+      res.set('Content-Type', 'image/jpg')
+      res.send(user.avatar)
+  } catch (e) {
+      res.status(400).send(e)
+  }
+
+})
 
 
 
