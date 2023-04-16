@@ -43,7 +43,7 @@ router.post("/login", async(req,res)=>{
 } catch (e) {
     res.status(400).send({
       success:false,
-      error:e.message
+      error:"Check Email Address and Password"
     });
 }
 }) 
