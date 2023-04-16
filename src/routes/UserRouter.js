@@ -18,7 +18,7 @@ router.post("/register", async(req,res)=>{
     .send({
       success:true,
       user,
-      message:"User Account Created Successfully",
+      message:e.message,
       token
     })
        
