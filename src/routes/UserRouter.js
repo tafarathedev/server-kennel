@@ -18,7 +18,6 @@ router.post("/register", async(req,res)=>{
     .send({
       success:true,
       user,
-      message:e.message,
       token
     })
        
@@ -43,7 +42,7 @@ router.post("/login", async(req,res)=>{
 } catch (e) {
     res.status(400).send({
       success:false,
-      error:"Check Email Address and Password"
+      message:e.message,
     });
 }
 }) 
