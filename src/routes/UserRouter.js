@@ -89,6 +89,9 @@ router.get("/me/profile",auth, async(req, res) => {
 router.get('/users', async (req, res) => {
   try {
     const users = await User.find({});
+    if (!users ) {
+      return "does not exist"
+    }
     res.json(users);
   } catch (err) {
     console.error(err.message);
